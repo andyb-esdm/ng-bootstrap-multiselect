@@ -1,0 +1,21 @@
+<div ngbDropdown class="d-inline-block w-100">
+    <button class="btn btn-light w-100" id="dropdown" ngbDropdownToggle>
+        Select a value
+    </button>
+    <div ngbDropdownMenu aria-labelledby="dropdownForm1">
+        <div class="search">
+            <input type="text" class="form-control" autocomplete="off" role="textbox" aria-label="Search">
+        </div>
+        <div class="d-flex">
+            <button class="btn btn-light flex-fill">select all</button>
+            <button class="btn btn-light flex-fill">deselect all</button>
+        </div>
+        <div class="inner">
+            <ul>
+                <li class="d-flex justify-content-between" *ngFor="let option of options">
+                    <div>{{ option }}</div><div>x</div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
