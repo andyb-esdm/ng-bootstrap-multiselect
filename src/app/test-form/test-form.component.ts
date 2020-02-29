@@ -35,6 +35,8 @@ export class TestFormComponent implements OnInit {
     sites: [[1, 2, 3]]
   });
 
+  values = [5, 6, 7];
+
   constructor(private fb: FormBuilder) { }
 
   ngOnInit(): void {
@@ -43,6 +45,10 @@ export class TestFormComponent implements OnInit {
   onSubmit() {
     console.log(this.form.value);
     console.log(this.form.get('sites'));
+  }
+
+  onTestModel() {
+    console.log(this.values);
   }
 
 }

@@ -13,3 +13,10 @@
     </div>
 </form>
 
+<h1>Model</h1>
+<div>
+    <app-multi-select [items]="items" [(ngModel)]="values"></app-multi-select>
+</div>
+<div>
+    <button class="btn btn-primary" type="button" (click)="onTestModel()">Test Model</button>
+</div>
