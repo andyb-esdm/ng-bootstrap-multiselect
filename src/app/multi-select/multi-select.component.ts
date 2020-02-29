@@ -1,5 +1,7 @@
-import { Component, OnInit, forwardRef } from '@angular/core';
+import { Component, OnInit, forwardRef, Input } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { IMultiSelectOptions } from './multi-select-options.model';
+import { IMultiSelectItem } from './multi-select-item.model';
 
 @Component({
   selector: 'app-multi-select',
@@ -14,43 +16,64 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
   ]
 })
 export class MultiSelectComponent implements OnInit, ControlValueAccessor {
+  @Input() items: IMultiSelectItem[];
+  @Input() options: IMultiSelectOptions;
+
+  onChange;
+  onTouched;
+  isDisabled;
+
+  buttonLabel: string;
+
+  selectAllLabel = 'Select All';
+  deselectAllLabel = 'Deselect All';
+  defaultLabel = 'Select a value';
+  selectedLabel = 'items selected';
+
+  private values: (string | number)[];
 
   constructor() { }
 
-  values: number[];
+  ngOnInit(): void {
+    if (this.options) {
+      this.setupLabels();
+    }
+  }
 
-  options = [
-    { id: 1, name: 'one', checked: false },
-    { id: 2, name: 'two', checked: false },
-    { id: 3, name: 'three', checked: false },
-    { id: 4, name: 'four', checked: false },
-    { id: 5, name: 'five', checked: false },
-    { id: 6, name: 'six', checked: false },
-    { id: 7, name: 'seven', checked: false },
-    { id: 8, name: 'eight', checked: false },
-    { id: 9, name: 'nine', checked: false },
-    { id: 10, name: 'ten', checked: false }
-  ];
+  private setupLabels() {
+    if (this.options.defaultLabel) {
+      this.defaultLabel = this.options.defaultLabel;
+    }
+    if (this.options.selectAllLabel) {
+      this.selectAllLabel = this.options.selectAllLabel;
+    }
+    if (this.options.deslectAllLabel) {
+      this.deselectAllLabel = this.options.deslectAllLabel;
+    }
+    if (this.options.selectedLabel) {
+      this.selectedLabel = this.options.selectedLabel;
+    }
+    this.buttonLabel = this.defaultLabel;
+  }
 
-  writeValue(values: number[]): void {
-    this.values = values ? values : [];
+  writeValue(values: (string | number)[]): void {
+    this.values = values ? [...values] : [];
     this.bindToValues();
   }
 
   registerOnChange(fn: any): void {
-    // throw new Error("Method not implemented.");
+    this.onChange = fn;
   }
+
   registerOnTouched(fn: any): void {
-    // throw new Error("Method not implemented.");
+    this.onTouched = fn;
   }
+
   setDisabledState?(isDisabled: boolean): void {
-    // throw new Error("Method not implemented.");
+    this.isDisabled = isDisabled;
   }
 
-  ngOnInit(): void {
-  }
-
-  onOptionClicked(id: number) {
+  onItemClicked(id: string | number) {
     const index = this.values.indexOf(id);
     if (index !== -1) {
       this.values.splice(index, 1);
@@ -58,16 +81,34 @@ export class MultiSelectComponent implements OnInit, ControlValueAccessor {
       this.values.push(id);
     }
     this.bindToValues();
+    this.onChange(this.values);
+  }
+
+  selectAll() {
+    this.values = this.items.map(item => item.id);
+    this.bindToValues();
+    this.onChange(this.values);
+  }
+
+  deselectAll() {
+    this.values = [];
+    this.bindToValues();
+    this.onChange(this.values);
   }
 
   private bindToValues() {
-    this.options.forEach(option => option.checked = false);
-    this.values.forEach((value: number) => {
-      const selectedOption = this.options.find(option => option.id === value);
-      if (selectedOption) {
-        selectedOption.checked = true;
+    this.items.forEach(item => item.checked = false);
+    this.values.forEach((value: string | number) => {
+      const selectedItem = this.items.find(item => item.id === value);
+      if (selectedItem) {
+        selectedItem.checked = true;
       }
     });
+    if (this.values.length) {
+      this.buttonLabel = `${this.values.length} ${this.selectedLabel}`;
+    } else {
+      this.buttonLabel = this.defaultLabel;
+    }
   }
 
 }

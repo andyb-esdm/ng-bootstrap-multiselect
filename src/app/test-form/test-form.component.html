@@ -6,7 +6,7 @@
     </div>
     <div class="form-group">
         <label for="sitesSelect">Sites</label>
-        <app-multi-select formControlName="sites" id="sitesSelect"></app-multi-select>
+        <app-multi-select [items]="items" [options]="options" formControlName="sites" id="sitesSelect"></app-multi-select>
     </div>
     <div class="form-group">
         <button class="btn btn-primary" type="submit">Submit</button>

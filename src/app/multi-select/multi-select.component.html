@@ -1,19 +1,19 @@
 <div ngbDropdown class="d-inline-block w-100">
-    <button type="button" class="btn btn-light w-100" id="dropdown" ngbDropdownToggle>
-        Select a value
+    <button type="button" class="btn btn-light w-100" id="dropdown" ngbDropdownToggle [disabled]="isDisabled" (click)="onTouched()">
+        {{ buttonLabel }}
     </button>
     <div ngbDropdownMenu aria-labelledby="dropdownForm1">
         <div class="search">
             <input type="text" class="form-control" autocomplete="off" role="textbox" aria-label="Search">
         </div>
         <div class="d-flex">
-            <button type="button" class="btn btn-light flex-fill">select all</button>
-            <button type="button" class="btn btn-light flex-fill">deselect all</button>
+            <button type="button" class="btn btn-light flex-fill" (click)="selectAll()">{{ selectAllLabel }}</button>
+            <button type="button" class="btn btn-light flex-fill" (click)="deselectAll()">{{ deselectAllLabel }}</button>
         </div>
         <div class="inner">
             <ul>
-                <li class="d-flex justify-content-between" *ngFor="let option of options" (click)="onOptionClicked(option.id)">
-                    <div>{{ option.name }}</div><div *ngIf="option.checked">x</div>
+                <li class="d-flex justify-content-between" *ngFor="let item of items" (click)="onItemClicked(item.id)">
+                    <div>{{ item.name }}</div><div *ngIf="item.checked">x</div>
                 </li>
             </ul>
         </div>
