@@ -5,8 +5,8 @@
         <input class="form-control" type="text" id="name" formControlName="name">
     </div>
     <div class="form-group">
-        <label for="sitesSelect">Sites</label>
-        <app-multi-select [items]="items" [options]="options" formControlName="sites" id="sitesSelect"></app-multi-select>
+        <label for="numbersSelect">Numbers</label>
+        <app-multi-select [data]="data" [options]="options" formControlName="numbers" id="numbersSelect"></app-multi-select>
     </div>
     <div class="form-group">
         <button class="btn btn-primary" type="submit">Submit</button>
@@ -15,7 +15,7 @@
 
 <h1>Model</h1>
 <div>
-    <app-multi-select [items]="items" [(ngModel)]="values"></app-multi-select>
+    <app-multi-select [data]="sites" [options]="siteOptions" [(ngModel)]="siteCodes"></app-multi-select>
 </div>
 <div>
     <button class="btn btn-primary" type="button" (click)="onTestModel()">Test Model</button>

@@ -1,4 +1,4 @@
-import { Component, OnInit, forwardRef, Input } from '@angular/core';
+import { Component, OnInit, forwardRef, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { IMultiSelectOptions } from './multi-select-options.model';
 import { IMultiSelectItem } from './multi-select-item.model';
@@ -15,11 +15,13 @@ import { IMultiSelectItem } from './multi-select-item.model';
     }
   ]
 })
-export class MultiSelectComponent implements OnInit, ControlValueAccessor {
-  @Input() items: IMultiSelectItem[];
+export class MultiSelectComponent implements OnInit, OnChanges, ControlValueAccessor {
+  @Input() data: object[];
   @Input() options: IMultiSelectOptions;
 
-  onChange;
+  items: IMultiSelectItem[] = [];
+
+  onChange: (value: (string | number)[]) => void;
   onTouched;
   isDisabled;
 
@@ -30,17 +32,27 @@ export class MultiSelectComponent implements OnInit, ControlValueAccessor {
   defaultLabel = 'Select a value';
   selectedLabel = 'items selected';
 
+  idProperty = 'id';
+  nameProperty = 'name';
+
   private values: (string | number)[];
 
   constructor() { }
 
   ngOnInit(): void {
-    if (this.options) {
-      this.setupLabels();
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes.options.currentValue) {
+        this.setupOptions();
+    }
+    if (changes.data.currentValue) {
+      const currentData = changes.data.currentValue as any[];
+      this.items = currentData.map(data => ({ id: data[this.idProperty], name: data[this.nameProperty], checked: false }));
     }
   }
 
-  private setupLabels() {
+  private setupOptions() {
     if (this.options.defaultLabel) {
       this.defaultLabel = this.options.defaultLabel;
     }
@@ -54,6 +66,12 @@ export class MultiSelectComponent implements OnInit, ControlValueAccessor {
       this.selectedLabel = this.options.selectedLabel;
     }
     this.buttonLabel = this.defaultLabel;
+    if (this.options.idProperty) {
+      this.idProperty = this.options.idProperty;
+    }
+    if (this.options.nameProperty) {
+      this.nameProperty = this.options.nameProperty;
+    }
   }
 
   writeValue(values: (string | number)[]): void {

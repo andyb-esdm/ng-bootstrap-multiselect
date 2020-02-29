@@ -3,4 +3,6 @@ export interface IMultiSelectOptions {
     deslectAllLabel?: string;
     defaultLabel?: string;
     selectedLabel?: string;
+    idProperty?: string;
+    nameProperty?: string;
 }

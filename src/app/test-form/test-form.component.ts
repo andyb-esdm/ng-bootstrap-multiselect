@@ -10,7 +10,7 @@ import { IMultiSelectOptions } from '../multi-select/multi-select-options.model'
 })
 export class TestFormComponent implements OnInit {
 
-  items: IMultiSelectItem[] = [
+  data: IMultiSelectItem[] = [
     { id: 1, name: 'one', checked: false },
     { id: 2, name: 'two', checked: false },
     { id: 3, name: 'three', checked: false },
@@ -24,18 +24,34 @@ export class TestFormComponent implements OnInit {
   ];
 
   options: IMultiSelectOptions = {
+    defaultLabel: 'Select a number',
+    selectAllLabel: 'All numbers',
+    deslectAllLabel: 'Deselect all',
+    selectedLabel: 'numbers selected'
+  };
+
+  sites: any[] = [
+    { siteCode: 'C', siteName: 'Crickhowell' },
+    { siteCode: 'A', siteName: 'Abergavenny' },
+    { siteCode: 'L', siteName: 'Llangattock' },
+    { siteCode: 'B', siteName: 'Brecon' }
+  ];
+
+  siteOptions: IMultiSelectOptions = {
     defaultLabel: 'Select a site',
     selectAllLabel: 'All sites',
     deslectAllLabel: 'Deselect all',
-    selectedLabel: 'sites selected'
+    selectedLabel: 'sites selected',
+    idProperty: 'siteCode',
+    nameProperty: 'siteName'
   };
 
   public form = this.fb.group({
     name: ['andyb'],
-    sites: [[1, 2, 3]]
+    numbers: [[1, 2, 3]]
   });
 
-  values = [5, 6, 7];
+  siteCodes = ['A', 'B'];
 
   constructor(private fb: FormBuilder) { }
 
@@ -44,11 +60,11 @@ export class TestFormComponent implements OnInit {
 
   onSubmit() {
     console.log(this.form.value);
-    console.log(this.form.get('sites'));
+    console.log(this.form.get('numbers'));
   }
 
   onTestModel() {
-    console.log(this.values);
+    console.log(this.siteCodes);
   }
 
 }
