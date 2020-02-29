@@ -104,10 +104,16 @@ export class MultiSelectComponent implements OnInit, ControlValueAccessor {
         selectedItem.checked = true;
       }
     });
-    if (this.values.length) {
-      this.buttonLabel = `${this.values.length} ${this.selectedLabel}`;
-    } else {
-      this.buttonLabel = this.defaultLabel;
+
+    switch (this.values.length) {
+      case 0:
+        this.buttonLabel = this.defaultLabel;
+        break;
+      case 1:
+        this.buttonLabel = this.items.find(item => item.id === this.values[0]).name;
+        break;
+      default:
+        this.buttonLabel = `${this.values.length} ${this.selectedLabel}`;
     }
   }
 
