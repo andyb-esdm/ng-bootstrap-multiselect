@@ -2,10 +2,11 @@
     <button type="button" class="btn btn-light w-100" id="dropdown" ngbDropdownToggle [disabled]="isDisabled" (click)="onTouched()">
         {{ buttonLabel }}
     </button>
-    <div ngbDropdownMenu aria-labelledby="dropdownForm1">
+    <div ngbDropdownMenu>
         <div class="search">
-            <input type="text" class="form-control" autocomplete="off" role="textbox" aria-label="Search">
+            <input #search type="text" class="form-control" autocomplete="off" role="textbox" aria-label="Search">
         </div>
+        {{search.focus()}}
         <div class="d-flex">
             <button type="button" class="btn btn-light flex-fill" (click)="selectAll()">{{ selectAllLabel }}</button>
             <button type="button" class="btn btn-light flex-fill" (click)="deselectAll()">{{ deselectAllLabel }}</button>
