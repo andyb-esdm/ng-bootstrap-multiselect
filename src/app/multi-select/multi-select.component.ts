@@ -1,4 +1,7 @@
-import { Component, OnInit, AfterViewInit, OnDestroy, ElementRef, forwardRef, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
+import {
+  Component, OnInit, AfterViewInit, OnDestroy, ElementRef, forwardRef,
+  Input, OnChanges, SimpleChanges, ViewChild
+} from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { IMultiSelectOptions } from './multi-select-options.model';
 import { IMultiSelectItem } from './multi-select-item.model';
@@ -180,6 +183,22 @@ export class MultiSelectComponent implements OnInit, OnChanges, AfterViewInit, O
       default:
         this.buttonLabel = `${this.values.length} ${this.selectedLabel}`;
     }
+  }
+
+  onOpenChange(open: boolean) {
+    if (!open) {
+      this.clearSearchInput();
+    }
+  }
+
+  clearSearchInput() {
+    this.searchInput.nativeElement.value = '';
+    const inputEvent = new Event('input', {
+      bubbles: true,
+      cancelable: true,
+    });
+    this.searchInput.nativeElement.dispatchEvent(inputEvent);
+    this.noResultsSubject.next(null);
   }
 
 }

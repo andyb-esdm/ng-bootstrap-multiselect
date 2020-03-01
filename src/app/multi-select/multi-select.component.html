@@ -1,19 +1,25 @@
-<div ngbDropdown class="d-inline-block w-100">
-    <button type="button" class="btn btn-light w-100" id="dropdown" ngbDropdownToggle [disabled]="isDisabled" (click)="onTouched()">
+<div ngbDropdown (openChange)="onOpenChange($event)" class="d-inline-block w-100">
+    <button type="button" class="btn btn-light w-100" id="dropdown" ngbDropdownToggle [disabled]="isDisabled"
+        (click)="onTouched()">
         {{ buttonLabel }}
     </button>
     <div ngbDropdownMenu>
-        <div class="search">
+        <div class="search input-group">
             <input #search type="text" class="form-control" autocomplete="off" role="textbox" aria-label="Search">
+            <div class="input-group-append">
+                <button class="btn btn-default" (click)="clearSearchInput()" type="button">X</button>
+            </div>
         </div>
         {{search.focus()}}
         <div class="d-flex">
             <button type="button" class="btn btn-light flex-fill" (click)="selectAll()">{{ selectAllLabel }}</button>
-            <button type="button" class="btn btn-light flex-fill" (click)="deselectAll()">{{ deselectAllLabel }}</button>
+            <button type="button" class="btn btn-light flex-fill"
+                (click)="deselectAll()">{{ deselectAllLabel }}</button>
         </div>
         <div class="inner">
             <ul>
-                <li class="d-flex justify-content-between" *ngFor="let item of filteredItems" (click)="onItemClicked(item.id)">
+                <li class="d-flex justify-content-between" *ngFor="let item of filteredItems"
+                    (click)="onItemClicked(item.id)">
                     <div>{{ item.name }}</div>
                     <span *ngIf="item.checked" class="check-mark"></span>
                 </li>
