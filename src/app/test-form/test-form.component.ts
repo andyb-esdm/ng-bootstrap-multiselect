@@ -42,6 +42,7 @@ export class TestFormComponent implements OnInit {
     selectAllLabel: 'All sites',
     deslectAllLabel: 'Deselect all',
     selectedLabel: 'sites selected',
+    noResultsLabel: 'Can\'t find',
     idProperty: 'siteCode',
     nameProperty: 'siteName'
   };

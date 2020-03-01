@@ -37,3 +37,9 @@ li:hover {
     border-width: 0 .26em .26em 0;
     transform: rotate(45deg);
 }
+
+.no-results {
+    padding: 0 1rem;
+    margin-top: 0.25rem;
+    background-color: #e2e6ea;
+}

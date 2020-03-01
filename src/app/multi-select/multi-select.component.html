@@ -13,11 +13,12 @@
         </div>
         <div class="inner">
             <ul>
-                <li class="d-flex justify-content-between" *ngFor="let item of items" (click)="onItemClicked(item.id)">
+                <li class="d-flex justify-content-between" *ngFor="let item of filteredItems" (click)="onItemClicked(item.id)">
                     <div>{{ item.name }}</div>
                     <span *ngIf="item.checked" class="check-mark"></span>
                 </li>
             </ul>
+            <div class="no-results" *ngIf="noResults$ | async as noResults">{{noResultsLabel}} '{{noResults}}'</div>
         </div>
     </div>
 </div>
