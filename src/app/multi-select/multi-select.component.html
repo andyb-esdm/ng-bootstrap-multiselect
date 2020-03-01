@@ -15,7 +15,7 @@
             <ul>
                 <li class="d-flex justify-content-between" *ngFor="let item of items" (click)="onItemClicked(item.id)">
                     <div>{{ item.name }}</div>
-                    <img *ngIf="item.checked" class="check-mark" src="../../assets/check-mark.png" alt="check-mark">
+                    <span *ngIf="item.checked" class="check-mark"></span>
                 </li>
             </ul>
         </div>
