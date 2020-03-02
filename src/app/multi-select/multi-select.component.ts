@@ -34,9 +34,7 @@ export class MultiSelectComponent implements OnInit, OnChanges, AfterViewInit, O
   items: IMultiSelectItem[] = [];
   filteredItems: IMultiSelectItem[] = [];
 
-  onChange: (value: (string | number)[]) => void;
-  onTouched;
-  isDisabled;
+  isDisabled: boolean;
 
   buttonLabel: string;
 
@@ -51,6 +49,9 @@ export class MultiSelectComponent implements OnInit, OnChanges, AfterViewInit, O
 
   private values: (string | number)[];
 
+  onChange: any = () => { };
+  onTouched: () => any = () => { };
+
   constructor() { }
 
   ngOnInit() {
@@ -61,13 +62,17 @@ export class MultiSelectComponent implements OnInit, OnChanges, AfterViewInit, O
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes.options.currentValue) {
-      this.setupOptions();
+    if (changes.options) {
+      if (changes.options.currentValue) {
+        this.setupOptions();
+      }
     }
-    if (changes.data.currentValue) {
-      const currentData = changes.data.currentValue as any[];
-      this.items = currentData.map(data => ({ id: data[this.idProperty], name: data[this.nameProperty], checked: false }));
-      this.filteredItems = [...this.items];
+    if (changes.data) {
+      if (changes.data.currentValue) {
+        const currentData = changes.data.currentValue as any[];
+        this.items = currentData.map(data => ({ id: data[this.idProperty], name: data[this.nameProperty], checked: false }));
+        this.filteredItems = [...this.items];
+      }
     }
   }
 
