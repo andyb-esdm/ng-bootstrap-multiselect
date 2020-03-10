@@ -72,6 +72,7 @@ export class MultiSelectComponent implements OnInit, OnChanges, AfterViewInit, O
         const currentData = changes.data.currentValue as any[];
         this.items = currentData.map(data => ({ id: data[this.idProperty], name: data[this.nameProperty], checked: false }));
         this.filteredItems = [...this.items];
+        this.bindToValues();
       }
     }
   }
